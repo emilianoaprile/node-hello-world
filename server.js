@@ -21,6 +21,7 @@ http
             </head>
             <body>
                 <h1>404 - Not Found</h1>
+                <p>Torna alla <a href="/">Home</a>, la pagina non esiste</p>
             </body>
             </html>`);
             return;
@@ -43,6 +44,21 @@ http
                 <h1>${randomPhrase}</h1>
             </body>
             </html>`)
+        } else {
+            res.end(`
+            <!DOCTYPE html>
+            <html lang="en">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Not Found</title>
+            </head>
+            <body>
+                <h1>404 - Not Found</h1>
+                <p>Torna alla <a href="/">Home</a>, la pagina non esiste</p>
+            </body>
+            </html>
+            `)
         }
     })
     .listen(port, host, () => {
