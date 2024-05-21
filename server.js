@@ -6,25 +6,44 @@ const host = process.env.HOST;
 const getRandomPhrase = require('./functions')
 const phrases = require('./variables')
 
-const randomPhrase = getRandomPhrase(phrases)
-console.log(randomPhrase)
-
 http
     .createServer((req, res) => {
-        res.writeHead(200, {
-            "Content-type": "text/html"
-        });
-        res.end(`<!DOCTYPE html>
-        <html lang="en">
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Hello World</title>
-        </head>
-        <body>
-            <h1>${randomPhrase}</h1>
-        </body>
-        </html>`)
+        if (req.url === "/favicon.ico") {
+            res.writeHead(404, {
+                "Content-Type": "text/html"
+            });
+            res.end(`<!DOCTYPE html>
+            <html lang="en">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Not Found</title>
+            </head>
+            <body>
+                <h1>404 - Not Found</h1>
+            </body>
+            </html>`);
+            return;
+        }
+
+        if (req.url === "/") {
+            const randomPhrase = getRandomPhrase(phrases)
+
+            res.writeHead(200, {
+                "Content-type": "text/html"
+            });
+            res.end(`<!DOCTYPE html>
+            <html lang="en">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Hello World</title>
+            </head>
+            <body>
+                <h1>${randomPhrase}</h1>
+            </body>
+            </html>`)
+        }
     })
     .listen(port, host, () => {
         const serverUrl = `http://${host}:${port}`
